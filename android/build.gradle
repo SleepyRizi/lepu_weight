@@ -1,0 +1,79 @@
+group = "com.sm.sm_lepu_weight"
+version = "1.0"
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.3.0")
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+//        maven {
+//
+//            url = uri("https://github.com/SmartMindSYSCoder/ICDeviceManager/releases/download/v1.0.1/ICDeviceManager.aar")
+//
+//            //https://github.com/SmartMindSYSCoder/ICDeviceManager/releases/download/v1.0.1/ICDeviceManager.aar
+//        }
+
+        flatDir {
+            dirs project(':sm_lepu_weight').file('libs')
+        }
+//        flatDir {
+//            dirs 'libs'
+//        }
+    }
+}
+
+apply plugin: "com.android.library"
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace = "com.sm.sm_lepu_weight"
+    }
+
+    compileSdk = 34
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdk = 21
+    }
+
+    dependencies {
+        implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+        testImplementation("junit:junit:4.13.2")
+        testImplementation("org.mockito:mockito-core:5.0.0")
+
+        implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
+
+//        implementation 'com.github.SmartMindSYSCoder:ICDeviceManager:v1.0.1'
+
+//        implementation(name: 'ICDeviceManager', ext: 'aar')
+        api(name: 'ICDeviceManager', ext: 'aar')
+
+//        implementation files('libs/ICDeviceManager.aar')
+//
+    }
+
+    testOptions {
+        unitTests.all {
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"
+               outputs.upToDateWhen {false}
+               showStandardStreams = true
+            }
+        }
+    }
+}
