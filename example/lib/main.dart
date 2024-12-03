@@ -18,7 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  final _smLepuWeightPlugin = SmLepuWeight();
+  final smLepuWeight = SmLepuWeight();
 
   WeightModel weightModel =WeightModel();
 
@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
     // We also handle the message potentially returning null.
     try {
       platformVersion =
-          await _smLepuWeightPlugin.getPlatformVersion() ?? 'Unknown platform version';
+          await smLepuWeight.getPlatformVersion() ?? 'Unknown platform version';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -70,19 +70,19 @@ class _MyAppState extends State<MyApp> {
 
               TextButton(onPressed: (){
 
-                _smLepuWeightPlugin.checkPermissions();
+                smLepuWeight.checkPermissions();
 
               }, child: Text("checkPermissions")),
 
               SizedBox(height: 30,),
               TextButton(onPressed: (){
 
-                _smLepuWeightPlugin.init();
+                smLepuWeight.init();
 
 
 
-                if(!_smLepuWeightPlugin.isListening) {
-                  _smLepuWeightPlugin.statusStream.listen((data) {
+                if(!smLepuWeight.isListening) {
+                  smLepuWeight.statusStream.listen((data) {
                     // print("from flutter ")
 
 
@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
               SizedBox(height: 30,),
               TextButton(onPressed: (){
 
-                _smLepuWeightPlugin.scan();
+                smLepuWeight.scan();
 
               }, child: Text("scan")),
 

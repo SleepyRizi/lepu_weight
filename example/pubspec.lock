@@ -194,9 +194,11 @@ packages:
   sm_lepu_weight:
     dependency: "direct main"
     description:
-      path: ".."
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "403e46e5d406dd7ea3e9a6d66a04bb434115031b"
+      url: "https://github.com/SmartMindSYSCoder/lepu_weight.git"
+    source: git
     version: "0.0.1"
   source_span:
     dependency: transitive
