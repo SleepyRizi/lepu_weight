@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -81,26 +83,25 @@ class _MyAppState extends State<MyApp> {
 
 
 
-                if(!smLepuWeight.isListening) {
-                  smLepuWeight.statusStream.listen((data) {
-                    // print("from flutter ")
 
 
-                    if (data is WeightModel) {
-                      weightModel = data;
-                    }
-
-                    setState(() {
-                      // this.data=data.toString();
-                    });
-                  });
-                }
               }, child: Text("Init")),
 
               SizedBox(height: 30,),
               TextButton(onPressed: (){
 
                 smLepuWeight.scan();
+
+
+                smLepuWeight.getEvents().listen((event) {
+                  final  data = jsonDecode(event);
+                  weightModel = WeightModel.fromJson(data);
+
+
+                  setState(() {
+                  });
+                });
+
 
               }, child: Text("scan")),
 

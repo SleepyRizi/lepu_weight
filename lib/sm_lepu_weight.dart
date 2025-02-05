@@ -13,8 +13,7 @@ class SmLepuWeight {
 
 
 
-  @visibleForTesting
-  final eventChannel = const EventChannel("sm_lepu_weight_status");
+  final _eventChannel = const EventChannel("sm_lepu_weight_status");
 
 
   Future<String?> getPlatformVersion() {
@@ -30,8 +29,7 @@ class SmLepuWeight {
   Future<dynamic> init() async{
       methodChannel.invokeMethod('init');
 
-      _readStatus();
-      scan();
+     // scan();
 
   }
 
@@ -42,39 +40,41 @@ class SmLepuWeight {
 
 
 
-  final StreamController _controller = StreamController<dynamic>();
+  // final StreamController _controller = StreamController<dynamic>();
+  //
+  // Stream<dynamic> get statusStream => _controller.stream;
+  // bool get isListening => _controller.hasListener;
+  //
+  // Future<dynamic>  _readStatus() async{
+  //
+  //   _eventChannel
+  //       .receiveBroadcastStream().listen((result){
+  //
+  //
+  //         try {
+  //           final Map<String, dynamic> data = jsonDecode(result.toString());
+  //           WeightModel weightModel = WeightModel.fromJson(data);
+  //
+  //
+  //           if (!_controller.isClosed) {
+  //             _controller.sink.add(weightModel);
+  //           }
+  //
+  //           if(weightModel.isFinished){
+  //
+  //            // _controller.close();
+  //           }
+  //         }catch (_){}
+  //   },
+  //
+  //     onError: (error) {
+  //       debugPrint(' ***********************   Error in event stream: $error');
+  //     },
+  //   );
+  // }
+  //
 
-  Stream<dynamic> get statusStream => _controller.stream;
-  bool get isListening => _controller.hasListener;
-
-  Future<dynamic>  _readStatus() async{
-
-    eventChannel
-        .receiveBroadcastStream().listen((result){
-
-
-          try {
-            final Map<String, dynamic> data = jsonDecode(result.toString());
-            WeightModel weightModel = WeightModel.fromJson(data);
-
-
-            if (!_controller.isClosed) {
-              _controller.sink.add(weightModel);
-            }
-
-            if(weightModel.isFinished){
-
-             // _controller.close();
-            }
-          }catch (_){}
-    },
-
-      onError: (error) {
-        debugPrint(' ***********************   Error in event stream: $error');
-      },
-    );
+  Stream<String> getEvents() {
+    return _eventChannel.receiveBroadcastStream().map((event) => event.toString());
   }
-
-
-
 }
