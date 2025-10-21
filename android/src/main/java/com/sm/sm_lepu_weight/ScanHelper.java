@@ -63,8 +63,9 @@ public  class ScanHelper implements ICScanDeviceDelegate{
 
         }
         for (ICScanDeviceInfo deviceInfo1 : _devices) {
-
-            if(deviceInfo1.getName().toLowerCase().contains("my_scale")){
+            String name = deviceInfo1.getName() == null ? "" : deviceInfo1.getName().toLowerCase();
+            if (name.contains("my_scale") || name.contains("lepu") || name.contains("lescale")
+                    || name.contains("p1") || name.contains("scale") || name.contains("icomon")) {
 
                 ICDeviceManager.shared().stopScan();
                 ICScanDeviceInfo device = deviceInfo1;

@@ -54,18 +54,17 @@ implements  ICScanDeviceDelegate, ICDeviceManagerDelegate, EventMgr.Event   ,Eve
 
     @Override
     public void onListen(Object args, EventChannel.EventSink events) {
-
-
         this.events = events;
-
-        Log.i("onListen","this is from onListen  ******************************"+events);
-
-        if (events != null) {
-            events.success(connectionStateName);
-        }
-
-
-
+        try {
+            JSONObject o = new JSONObject();
+            o.put("connectState", connectionStateName);
+            o.put("isConnected", "Connected".equals(connectionStateName));
+            o.put("isFinished", false);
+            o.put("hasData", false);
+            o.put("msg", "");
+            o.put("weight", "0.00");
+            events.success(o.toString());
+        } catch (Exception ignored) {}
     }
 
     @Override
